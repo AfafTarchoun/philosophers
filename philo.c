@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/02 15:36:01 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/02 20:19:16 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 pthread_mutex_t	*init_fork(t_philo *table)
 {
 	pthread_mutex_t	*forks;
-	int	i;
+	int				i;
 
 	i = 0;
 	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->nb_philo);
@@ -30,14 +30,31 @@ pthread_mutex_t	*init_fork(t_philo *table)
 	return (forks);
 }
 
-t_philo	*init_philo(t_philo *table)
+t_each	**init_philo(t_philo *table)
 {
-	t_philo	**philosopher;
+	t_each	**philosopher;
+	int		i;
 
-	philosopher = (t_philo **)malloc(sizeof(t_philo *) * table->nb_philo + 1);
+	i = 0;
+	philosopher = (t_each **)malloc(sizeof(t_each *) * table->nb_philo);
 	if (philosopher == NULL)
 		return (NULL);
-	
+	while (i < table->nb_philo)
+	{
+		philosopher[i] = (t_each *)malloc(sizeof(t_each) * 1);
+		if (philosopher[i] == NULL)
+			return (NULL);
+		if (pthread_mutex_init(&philosopher[i]->eating, 0) != 0)
+			return (NULL);
+		philosopher[i]->table = table;
+		philosopher[i]->pid = i;
+		philosopher[i]->is_eating = 0;
+		philosopher[i]->nb_ate = 0;
+		philosopher[i]->left = i;
+		philosopher[i]->right = (i + 1) % philosopher[i]->table->nb_philo;
+		i++;
+	}
+	return (philosopher);
 }
 
 t_philo	*fill_table(int argc, char **argv)
@@ -53,12 +70,12 @@ t_philo	*fill_table(int argc, char **argv)
 	table->time_to_die = ft_atoi(argv[counter++]);
 	table->time_to_eat = ft_atoi(argv[counter++]);
 	table->time_to_sleep = ft_atoi(argv[counter++]);
-	table->nb_eat = 0;
-	if (argc -1 == 5)
+	table->nb_eat = -1;
+	if (argc - 1 == 5)
 		table->nb_eat = ft_atoi(argv[counter]);
 	table->forks = init_fork(table);
 	table->philosopher = init_philo(table);
-	return(table);
+	return (table);
 }
 
 int	main(int argc, char **argv)

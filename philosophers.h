@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:23 by atarchou          #+#    #+#             */
-/*   Updated: 2022/03/23 21:05:40 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/02 20:15:41 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,23 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+typedef	struct	s_each
+{
+	pthread_mutex_t	eating;
+	struct s_philo	*table;
+	int				pid;
+	int				left;
+	int				right;
+	int				nb_ate;
+	int				last_ate;
+	int				is_eating;
+}				t_each;	
+
+
 typedef	struct	s_philo
 {
 	long long	start;
-	pthread_t	*philosopher;
+	t_each	**philosopher;
 	pthread_mutex_t	*forks;
 	int			death;
 	int			nb_philo;
