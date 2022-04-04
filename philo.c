@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/04 01:07:47 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/04 01:53:27 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ pthread_mutex_t	*init_fork(t_philo *table)
 	int				i;
 
 	i = 0;
-	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->nb_philo);
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* table->nb_philo);
 	if (forks == NULL)
 		return (NULL);
 	while (i < table->nb_philo)
@@ -52,7 +53,7 @@ t_each	**init_philo(t_philo *table)
 		philosopher[i]->nb_ate = 0;
 		philosopher[i]->left = i;
 		philosopher[i]->right = (i + 1) % philosopher[i]->table->nb_philo;
-		printf("philo pid is :%d his left fork: %d his right fork: %d\n", philosopher[i]->pid, philosopher[i]->left, philosopher[i]->right);
+		printf("philo pid is :%d his left fork: %d his right fork: %d\n", philosopher[i]->pid ,philosopher[i]->left, philosopher[i]->right);
 		i++;
 	}
 	return (philosopher);
@@ -61,12 +62,12 @@ t_each	**init_philo(t_philo *table)
 t_philo	*fill_table(int argc, char **argv)
 {
 	t_philo	*table;
-	int counter;
+	int		counter;
 
 	counter = 1;
-	table = (t_philo *)malloc(sizeof(t_philo ) * 1);
+	table = (t_philo *)malloc(sizeof(t_philo) * 1);
 	if (table == NULL)
-		return(NULL);
+		return (NULL);
 	table->nb_philo = ft_atoi(argv[counter++]);
 	table->time_to_die = ft_atoi(argv[counter++]);
 	table->time_to_eat = ft_atoi(argv[counter++]);
@@ -86,13 +87,12 @@ int	main(int argc, char **argv)
 
 	philo = 0;
 	table = NULL;
-	
-	if (check_arg_validity(argc, argv) != 3)
+	if (check_arg_validity(argc, argv) != 1)
 	{
 		printf("Error: Invalid Argument\n");
 		return (-1);
 	}
 	table = fill_table(argc, argv);
 	if (table == NULL)
-		return(0);
+		return (0);
 }

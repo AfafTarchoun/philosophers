@@ -6,24 +6,50 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:18 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/04 01:10:30 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/04 01:53:10 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_is_number(char *string)
+int	ft_isdigit(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (string[i] != '\0')
+	while (str[i])
 	{
-		if (string[i] <= '0' || string[i] >= '9')
-			return (-1);
+		if (!(str[i] >= '0' && str[i] <= '9'))
+		{
+			if (str[i] == '-' && !str[i + 1])
+				return (0);
+			else if (str[i] == '+' && !str[i + 1])
+				return (0);
+			else if (str[i] == '+' && str[i + 1] >= '0' && str[i + 1] <= '9')
+				return (1);
+			else if (str[i] == '-' && str[i + 1] >= '0' && str[i + 1] <= '9')
+				return (1);
+			return (0);
+		}
 		i++;
 	}
-	return (3);
+	return (1);
+}
+
+int	check_digit(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '\0')
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isdigit(&str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	check_arg_validity(int argSize, char **args)
@@ -35,11 +61,13 @@ int	check_arg_validity(int argSize, char **args)
 		return (-1);
 	while (i < argSize)
 	{
-		if (args[i][0] == '-' && ft_is_number(args[i]) != 3)
+		if ((check_digit(args[i]) != 1))
+		{
 			return (-1);
+		}
 		i++;
 	}
-	return (3);
+	return (1);
 }
 
 int	ft_atoi(char *str)
