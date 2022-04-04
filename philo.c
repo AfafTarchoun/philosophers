@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/02 20:19:16 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/04 01:07:47 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_each	**init_philo(t_philo *table)
 		philosopher[i]->nb_ate = 0;
 		philosopher[i]->left = i;
 		philosopher[i]->right = (i + 1) % philosopher[i]->table->nb_philo;
+		printf("philo pid is :%d his left fork: %d his right fork: %d\n", philosopher[i]->pid, philosopher[i]->left, philosopher[i]->right);
 		i++;
 	}
 	return (philosopher);
@@ -86,6 +87,11 @@ int	main(int argc, char **argv)
 	philo = 0;
 	table = NULL;
 	
+	if (check_arg_validity(argc, argv) != 3)
+	{
+		printf("Error: Invalid Argument\n");
+		return (-1);
+	}
 	table = fill_table(argc, argv);
 	if (table == NULL)
 		return(0);
