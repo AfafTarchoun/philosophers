@@ -6,57 +6,28 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/04 01:53:27 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/07 20:48:52 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-pthread_mutex_t	*init_fork(t_philo *table)
+int	start_threads(t_philo *table)
 {
-	pthread_mutex_t	*forks;
-	int				i;
+	int	i;
 
 	i = 0;
-	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* table->nb_philo);
-	if (forks == NULL)
-		return (NULL);
+	table->start = ft_time();
 	while (i < table->nb_philo)
 	{
-		if (pthread_mutex_init(&forks[i], 0) != 0)
-			return (NULL);
+		table->philosopher[i]->last_eat_time = ft_time();
+		if (pthread_create(&table->philosopher[i]->thd_philo, NULL,
+				&start_routine, (void *)table->philosopher[i]) != 0)
+			return (-1);
 		i++;
+		usleep(100);
 	}
-	return (forks);
-}
-
-t_each	**init_philo(t_philo *table)
-{
-	t_each	**philosopher;
-	int		i;
-
-	i = 0;
-	philosopher = (t_each **)malloc(sizeof(t_each *) * table->nb_philo);
-	if (philosopher == NULL)
-		return (NULL);
-	while (i < table->nb_philo)
-	{
-		philosopher[i] = (t_each *)malloc(sizeof(t_each) * 1);
-		if (philosopher[i] == NULL)
-			return (NULL);
-		if (pthread_mutex_init(&philosopher[i]->eating, 0) != 0)
-			return (NULL);
-		philosopher[i]->table = table;
-		philosopher[i]->pid = i;
-		philosopher[i]->is_eating = 0;
-		philosopher[i]->nb_ate = 0;
-		philosopher[i]->left = i;
-		philosopher[i]->right = (i + 1) % philosopher[i]->table->nb_philo;
-		printf("philo pid is :%d his left fork: %d his right fork: %d\n", philosopher[i]->pid ,philosopher[i]->left, philosopher[i]->right);
-		i++;
-	}
-	return (philosopher);
+	return ;
 }
 
 t_philo	*fill_table(int argc, char **argv)
