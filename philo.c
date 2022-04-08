@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/07 20:48:52 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/08 01:21:44 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	start_threads(t_philo *table)
 		i++;
 		usleep(100);
 	}
-	return ;
+	return (1);
 }
 
 t_philo	*fill_table(int argc, char **argv)
@@ -44,6 +44,7 @@ t_philo	*fill_table(int argc, char **argv)
 	table->time_to_eat = ft_atoi(argv[counter++]);
 	table->time_to_sleep = ft_atoi(argv[counter++]);
 	table->nb_eat = -1;
+	table->death = 1;
 	if (argc - 1 == 5)
 		table->nb_eat = ft_atoi(argv[counter]);
 	table->forks = init_fork(table);
@@ -66,4 +67,5 @@ int	main(int argc, char **argv)
 	table = fill_table(argc, argv);
 	if (table == NULL)
 		return (0);
+	start_threads(table);
 }

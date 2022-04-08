@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:46:12 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/07 20:49:30 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/08 01:20:59 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_each	**init_philo(t_philo *table)
 	int		i;
 
 	i = 0;
-	philosopher = (t_each **)malloc(sizeof(t_each *) * table->nb_philo);
+	philosopher = (t_each **)malloc(sizeof(t_each *) * table->nb_philo + 1);
 	if (philosopher == NULL)
 		return (NULL);
 	while (i < table->nb_philo)
@@ -48,12 +48,11 @@ t_each	**init_philo(t_philo *table)
 		if (pthread_mutex_init(&philosopher[i]->eating, 0) != 0)
 			return (NULL);
 		philosopher[i]->table = table;
-		philosopher[i]->pid = i;
+		philosopher[i]->pid = i + 1;
 		philosopher[i]->is_eating = 0;
 		philosopher[i]->nb_ate = 0;
 		philosopher[i]->left = i;
 		philosopher[i]->right = (i + 1) % philosopher[i]->table->nb_philo;
-		printf("philo pid is :%d his left fork: %d his right fork: %d\n", philosopher[i]->pid ,philosopher[i]->left, philosopher[i]->right);
 		i++;
 	}
 	return (philosopher);
