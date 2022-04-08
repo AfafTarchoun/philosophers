@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:18 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/07 20:45:40 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/08 19:38:31 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_isdigit(char *str)
 			else if (str[i] == '+' && str[i + 1] >= '0' && str[i + 1] <= '9')
 				return (1);
 			else if (str[i] == '-' && str[i + 1] >= '0' && str[i + 1] <= '9')
-				return (1);
+				return (0);
 			return (0);
 		}
 		i++;

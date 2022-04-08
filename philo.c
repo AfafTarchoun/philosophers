@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/08 03:09:28 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/08 19:38:06 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ t_philo	*fill_table(int argc, char **argv)
 		table->nb_eat = ft_atoi(argv[counter]);
 	table->forks = init_fork(table);
 	table->philosopher = init_philo(table);
+	if (table->philosopher == NULL || table->nb_philo == 0)
+		return (NULL);
 	return (table);
 }
 
