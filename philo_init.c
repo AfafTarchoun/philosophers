@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:46:12 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/08 01:20:59 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/08 03:09:36 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_each	**init_philo(t_philo *table)
 		philosopher[i]->table = table;
 		philosopher[i]->pid = i + 1;
 		philosopher[i]->is_eating = 0;
-		philosopher[i]->nb_ate = 0;
+		philosopher[i]->nb_ate = -1;
 		philosopher[i]->left = i;
 		philosopher[i]->right = (i + 1) % philosopher[i]->table->nb_philo;
 		i++;

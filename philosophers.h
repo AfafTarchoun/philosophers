@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:23 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/07 22:14:37 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/08 02:39:25 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_each
 	pthread_mutex_t	eating;
 	struct s_philo	*table;
 	pthread_t		thd_philo;
-	pthread_t		myhem;
+	pthread_t		alive;
 	int				pid;
 	int				left;
 	int				right;
