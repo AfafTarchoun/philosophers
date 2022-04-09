@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:31:03 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/09 02:14:08 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 02:44:16 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	eating(t_each *philo)
 
 void	sleeping(t_each *philo)
 {
-//	ft_sleep(philo->table->time_to_sleep);
 	print_status(philo->table, philo->pid, "is sleeping\n");
 	ft_sleep(philo->table->time_to_sleep);
 }

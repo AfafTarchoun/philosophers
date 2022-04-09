@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/09 02:32:14 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 02:53:16 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,20 @@ void    *is_alive(void *data)
     t_each    *philo;
 
     philo = (t_each *)data;
-	static int i = 0;
     while (philo->table->death)
     {
         pthread_mutex_lock(&philo->eating);
         if (ft_time() - philo->last_eat_time > philo->table->time_to_die )
         {
-        //    pthread_mutex_lock(&philo->eating);
             philo->table->death = 0;
             print_status(philo->table, philo->pid, "died\n");
-        //    printf("%d << death\n", philo->table->death);
             return (NULL);
         }
         pthread_mutex_unlock(&philo->eating);
-		if (philo->table->philosopher[philo->table->nb_philo - 1]->nb_ate
-			== philo->table->ntpme)
+		if (philo->nb_ate >= philo->table->ntpme + 1)
 		{
-			i++;
-			printf("%d << i\n", i);
 			philo->table->death = 0;
-			printf("HERE !!\n");
+			return(NULL);
 		}
 		usleep(100);
     }
