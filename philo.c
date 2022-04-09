@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/09 02:29:33 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 02:32:14 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void    *is_alive(void *data)
             return (NULL);
         }
         pthread_mutex_unlock(&philo->eating);
-		if (philo->nb_ate == philo->table->ntpme)
+		if (philo->table->philosopher[philo->table->nb_philo - 1]->nb_ate
+			== philo->table->ntpme)
 		{
 			i++;
 			printf("%d << i\n", i);
