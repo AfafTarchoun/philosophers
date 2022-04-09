@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/09 02:11:43 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 02:29:33 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void    *is_alive(void *data)
     t_each    *philo;
 
     philo = (t_each *)data;
+	static int i = 0;
     while (philo->table->death)
     {
         pthread_mutex_lock(&philo->eating);
@@ -29,10 +30,14 @@ void    *is_alive(void *data)
             return (NULL);
         }
         pthread_mutex_unlock(&philo->eating);
-		if (philo->table->philosopher[philo->table->nb_philo - 1]->nb_ate
-			== philo->table->nb_eat)
+		if (philo->nb_ate == philo->table->ntpme)
+		{
+			i++;
+			printf("%d << i\n", i);
 			philo->table->death = 0;
-        usleep(100);
+			printf("HERE !!\n");
+		}
+		usleep(100);
     }
     return (NULL);
 }
@@ -79,10 +84,10 @@ t_philo	*fill_table(int argc, char **argv)
 	table->time_to_die = ft_atoi(argv[counter++]);
 	table->time_to_eat = ft_atoi(argv[counter++]);
 	table->time_to_sleep = ft_atoi(argv[counter++]);
-	table->nb_eat = -1;
+	table->ntpme = -1;
 	table->death = 1;
 	if (argc - 1 == 5)
-		table->nb_eat = ft_atoi(argv[counter]);
+		table->ntpme = ft_atoi(argv[counter]);
 	table->forks = init_fork(table);
 	table->philosopher = init_philo(table);
 	if (table->philosopher == NULL || table->nb_philo == 0)
