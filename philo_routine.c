@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:31:03 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/08 01:21:32 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 02:14:08 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	eating(t_each *philo)
 	print_status(philo->table, philo->pid, "is eating\n");
 	philo->last_eat_time = ft_time();
 	philo->is_eating = 1;
-	usleep(philo->table->time_to_eat * 1000);
+	ft_sleep(philo->table->time_to_eat);
 	philo->nb_ate++;
 	philo->is_eating = 0;
 	pthread_mutex_unlock(&philo->eating);
@@ -43,7 +43,7 @@ void	eating(t_each *philo)
 
 void	sleeping(t_each *philo)
 {
-	ft_sleep(philo->table->time_to_sleep);
+//	ft_sleep(philo->table->time_to_sleep);
 	print_status(philo->table, philo->pid, "is sleeping\n");
 	ft_sleep(philo->table->time_to_sleep);
 }

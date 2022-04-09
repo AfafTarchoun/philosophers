@@ -6,32 +6,35 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/08 19:38:06 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 02:11:43 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*is_alive(void *data)
+void    *is_alive(void *data)
 {
-	t_each	*philo;
+    t_each    *philo;
 
-	philo = (t_each *)data;
-	while (philo->table->death)
-	{
-		pthread_mutex_lock(&philo->eating);
-		if (ft_time() - philo->last_eat_time >= philo->table->time_to_die)
-		{
-			print_status(philo->table, philo->pid, "died\n");
-			philo->table->death = 0;
-		}
-		pthread_mutex_unlock(&philo->eating);
+    philo = (t_each *)data;
+    while (philo->table->death)
+    {
+        pthread_mutex_lock(&philo->eating);
+        if (ft_time() - philo->last_eat_time > philo->table->time_to_die )
+        {
+        //    pthread_mutex_lock(&philo->eating);
+            philo->table->death = 0;
+            print_status(philo->table, philo->pid, "died\n");
+        //    printf("%d << death\n", philo->table->death);
+            return (NULL);
+        }
+        pthread_mutex_unlock(&philo->eating);
 		if (philo->table->philosopher[philo->table->nb_philo - 1]->nb_ate
 			== philo->table->nb_eat)
 			philo->table->death = 0;
-		usleep(100);
-	}
-	return (NULL);
+        usleep(100);
+    }
+    return (NULL);
 }
 
 int	start_threads(t_philo *table)
@@ -47,7 +50,7 @@ int	start_threads(t_philo *table)
 				&start_routine, (void *)table->philosopher[i]) != 0)
 			return (-1);
 		i++;
-		usleep(100);
+		usleep(60);
 	}
 	i = 0;
 	while (i < table->nb_philo)
@@ -55,7 +58,7 @@ int	start_threads(t_philo *table)
 		if (pthread_create(&table->philosopher[i]->alive, NULL, &is_alive,
 				(void *)table->philosopher[i]) != 0)
 			return (-1);
-		usleep(100);
+		usleep(60);
 		i++;
 	}
 	while (table->death)
@@ -76,13 +79,15 @@ t_philo	*fill_table(int argc, char **argv)
 	table->time_to_die = ft_atoi(argv[counter++]);
 	table->time_to_eat = ft_atoi(argv[counter++]);
 	table->time_to_sleep = ft_atoi(argv[counter++]);
-	table->nb_eat = 0;
+	table->nb_eat = -1;
 	table->death = 1;
 	if (argc - 1 == 5)
 		table->nb_eat = ft_atoi(argv[counter]);
 	table->forks = init_fork(table);
 	table->philosopher = init_philo(table);
 	if (table->philosopher == NULL || table->nb_philo == 0)
+		return (NULL);
+	if (pthread_mutex_init(&table->write, 0) != 0)
 		return (NULL);
 	return (table);
 }

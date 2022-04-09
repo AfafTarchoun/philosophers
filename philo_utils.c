@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:18 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/08 19:38:31 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/09 00:33:26 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ int	ft_atoi(char *str)
 void	print_status(t_philo *table, int id, char *str)
 {
 	pthread_mutex_lock(&table->write);
-	printf("%lld %d %s", ft_time() - table->start, id, str);
+	printf("%lld %d %s", ft_time() - table->start, id + 1, str);
 	pthread_mutex_unlock(&table->write);
 }
