@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:18 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/09 00:33:26 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/15 20:23:19 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,11 @@ int	check_arg_validity(int argSize, char **args)
 
 	i = 1;
 	if (argSize - 1 < 4 || argSize - 1 > 5)
-		return (-1);
+		return (0);
 	while (i < argSize)
 	{
-		if ((check_digit(args[i]) != 1))
-		{
-			return (-1);
-		}
+		if ((check_digit(args[i]) != 1) || ft_atoi(args[i]) < 1)
+			return (0);
 		i++;
 	}
 	return (1);
@@ -92,7 +90,7 @@ int	ft_atoi(char *str)
 		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (num);
+	return (num * sign);
 }
 
 void	print_status(t_philo *table, int id, char *str)

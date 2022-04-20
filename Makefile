@@ -6,13 +6,13 @@
 #    By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/29 12:01:11 by atarchou          #+#    #+#              #
-#    Updated: 2022/04/07 21:21:23 by atarchou         ###   ########.fr        #
+#    Updated: 2022/04/20 00:52:12 by atarchou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 CC = gcc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -pthread
 SRCS = philo.c\
 		philo_utils.c\
 		philo_routine.c\
@@ -27,7 +27,7 @@ clean :
 		rm -rf $(NAME)
 
 fclean :
-		rm -rf philosophers
+		rm -rf philo
 
 re : fclean all
 

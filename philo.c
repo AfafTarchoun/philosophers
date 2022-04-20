@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atarchou <atarchou@student.42.fr>			+#+  +:+       +#+        */
+/*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 20:03:42 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/14 00:50:40 by rimney           ###   ########.fr       */
+/*   Created: 2022/04/14 18:35:21 by atarchou          #+#    #+#             */
+/*   Updated: 2022/04/20 01:57:41 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	death(t_each *philo)
+{
+	philo->table->death = 0;
+	pthread_mutex_lock(&philo->table->write);
+	printf("%lld %d %s", ft_time()
+		- philo->table->start, philo->pid + 1, "died\n");
+	return (0);
+}
 
 int	is_alive(t_each *philo)
 {
@@ -21,10 +30,20 @@ int	is_alive(t_each *philo)
 		i = 0;
 		while (i < philo->table->nb_philo)
 		{
-			if (ft_time() - philo->last_eat_time > philo->table->time_to_die)
+			if (!philo->is_eating && ft_time()
+				- philo->last_eat_time >= philo->table->time_to_die)
 			{
 				if (philo->nb_ate != philo->table->ntpme)
-					print_status(philo->table, philo->pid, "died\n");
+					death(*philo->table->philosopher);
+				return (0);
+			}
+			else if (philo->table->time_to_die < philo->table->time_to_eat
+				|| philo->table->time_to_die < philo->table->time_to_sleep)
+			{
+				philo->table->death = 0;
+				pthread_mutex_lock(&philo->table->write);
+				printf("%lld %d %s", ft_time()
+					- philo->table->start, philo->pid + 1, "died\n");
 				return (0);
 			}
 			i++;
@@ -44,7 +63,7 @@ int	start_threads(t_philo *table)
 		table->philosopher[i]->last_eat_time = ft_time();
 		if (pthread_create(&table->philosopher[i]->thd_philo, NULL,
 				&start_routine, (void *)table->philosopher[i]) != 0)
-			return (-1);
+			return (0);
 		i++;
 		usleep(100);
 	}
@@ -81,14 +100,12 @@ t_philo	*fill_table(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_philo	*table;
-	int		philo;
 
-	philo = 0;
 	table = NULL;
 	if (check_arg_validity(argc, argv) != 1)
 	{
 		printf("Error: Invalid Argument\n");
-		return (-1);
+		return (0);
 	}
 	table = fill_table(argc, argv);
 	if (table == NULL)

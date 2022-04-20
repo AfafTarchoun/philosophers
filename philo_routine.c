@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:31:03 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/14 17:58:42 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/15 20:19:15 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	ft_sleep(int x)
 	o = (long)x;
 	i = ft_time();
 	while (ft_time() - i < x)
-		usleep(500);
+		usleep(100);
 }
 
 void	philo_activity(t_each *philo)
 {
-	pthread_mutex_lock(&philo->eating);
 	pthread_mutex_lock(&philo->table->forks[philo->left]);
 	print_status(philo->table, philo->pid, "has taken a fork\n");
 	pthread_mutex_lock(&philo->table->forks[philo->right]);
 	print_status(philo->table, philo->pid, "has taken a fork\n");
 	philo->last_eat_time = ft_time();
 	print_status(philo->table, philo->pid, "is eating\n");
+	philo->is_eating = 1;
 	ft_sleep(philo->table->time_to_eat);
 	philo->nb_ate += 1;
 	pthread_mutex_unlock(&philo->table->forks[philo->right]);
@@ -39,7 +39,7 @@ void	philo_activity(t_each *philo)
 	print_status(philo->table, philo->pid, "is sleeping\n");
 	ft_sleep(philo->table->time_to_sleep);
 	print_status(philo->table, philo->pid, "is thinking\n");
-	pthread_mutex_unlock(&philo->eating);
+	philo->is_eating = 0;
 }
 
 void	*start_routine(void *data)

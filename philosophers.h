@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:15:23 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/14 17:57:31 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/17 23:23:28 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ typedef struct s_philo
 
 void			*start_routine(void *data);
 void			print_status(t_philo *table, int id, char *str);
-long long		ft_time(void);
 int				ft_atoi(char *str);
 int				check_arg_validity(int argSize, char **args);
+long long		ft_time(void);
 t_each			**init_philo(t_philo *table);
 pthread_mutex_t	*init_fork(t_philo *table);
-pthread_mutex_t	*init_fork(t_philo *table);
-t_each			**init_philo(t_philo *table);
 
 #endif
