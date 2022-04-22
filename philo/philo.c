@@ -6,7 +6,7 @@
 /*   By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 18:35:21 by atarchou          #+#    #+#             */
-/*   Updated: 2022/04/20 01:57:41 by atarchou         ###   ########.fr       */
+/*   Updated: 2022/04/22 02:41:31 by atarchou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,12 @@ int	is_alive(t_each *philo)
 				- philo->last_eat_time >= philo->table->time_to_die)
 			{
 				if (philo->nb_ate != philo->table->ntpme)
-					death(*philo->table->philosopher);
+					return (death(philo));
 				return (0);
 			}
 			else if (philo->table->time_to_die < philo->table->time_to_eat
 				|| philo->table->time_to_die < philo->table->time_to_sleep)
-			{
-				philo->table->death = 0;
-				pthread_mutex_lock(&philo->table->write);
-				printf("%lld %d %s", ft_time()
-					- philo->table->start, philo->pid + 1, "died\n");
-				return (0);
-			}
+				return (death(philo));
 			i++;
 		}
 	}

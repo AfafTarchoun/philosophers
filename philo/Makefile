@@ -6,13 +6,13 @@
 #    By: atarchou <atarchou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/29 12:01:11 by atarchou          #+#    #+#              #
-#    Updated: 2022/04/20 00:52:12 by atarchou         ###   ########.fr        #
+#    Updated: 2022/04/22 03:06:21 by atarchou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -pthread
+FLAGS = -Wall -Werror -Wextra
 SRCS = philo.c\
 		philo_utils.c\
 		philo_routine.c\
